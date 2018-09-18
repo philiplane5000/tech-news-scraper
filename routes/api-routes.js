@@ -1,6 +1,6 @@
 // const mongoose = require("mongoose");
 const db = require("../models");
-const axios = require("axios")
+const axios = require("axios");
 const cheerio = require("cheerio");
 
 module.exports = function (app) {
@@ -11,21 +11,23 @@ module.exports = function (app) {
             .then(response => {
 
                 const $ = cheerio.load(response.data);
+                let newArticles = []
 
                 $("div .c-entry-box--compact--article").each((i, element) => {
 
                     let article = {};
-                    //article.imgSrc => INEXPLICABLY NOT GRABBING THE RIGHT LINK://
-                    // article.imgSrc = $(element).children("a").children(".c-entry-box--compact__image").children(".c-dynamic-image").attr("src")
+                    article.imgHTML = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html()
                     article.title = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").text()
                     article.link = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").attr("href")
                     article.author = $(element).children(".c-entry-box--compact__body").children(".c-byline").children(".c-byline__item").children("a").text()
                     article.authorLink = $(element).children(".c-entry-box--compact__body").children(".c-byline").children(".c-byline__item").children("a").attr("href")
-
-                    //REVIEW RESULTS IN CONSOLE FOR NOW:
-                    console.log(JSON.stringify(article, undefined, 2))
+                    newArticles.push(article)
                 })
-
+                Promise
+                    .all(newArticles)
+                    .then(data => {
+                        res.json(data)
+                    })
             })
     })
 

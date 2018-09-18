@@ -40,7 +40,7 @@
             <div class="container">
                 <h1 class="display-4">Tech News Scraper</h1>
                 <p class="lead">The latest in tech news, all in one place.</p>
-                <button type="button" class="btn btn-danger">Scrape New Articles</button>
+                <button type="button" class="btn btn-danger" id="scrape-btn">Scrape New Articles</button>
             </div>
         </div>
 
@@ -50,13 +50,13 @@
 
                 <div class="card mr-4 mb-4" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Article Title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Article Author</h6>
-                        <p class="card-text">One or two line synopsis or description of the article</p>
-                        <a href="#" class="card-link">Link</a>
-                        <a href="#" class="card-link">Author Link</a>
+                        <h5 class="card-title article-title">Article Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted article-author">Article Author</h6>
+                        <!-- <p class="card-text">One or two line synopsis or description of the article</p> -->
+                        <a href="#" class="card-link article-link">Link</a>
+                        <a href="#" class="card-link author-link">Author Link</a>
                     </div>
-                    <button type="button" class="btn btn-info" id="save">Save</button>
+                    <button type="button" class="btn btn-info" id="save" data-article-title="article-title">Save</button>
                 </div>
                 <div class="card mr-4 mb-4" style="width: 18rem;">
                     <div class="card-body">
@@ -196,6 +196,7 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
 
