@@ -20,9 +20,6 @@ let ArticleSchema = new Schema({
     authorLink: {
         type: String,
     },
-    summary: {
-        type: String,
-    },
     comment: {
         type: Schema.Types.ObjectId,
         ref: "Comment"

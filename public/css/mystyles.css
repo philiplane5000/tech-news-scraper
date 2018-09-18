@@ -4,6 +4,10 @@
     margin-bottom: 20px;
 }
 
+.article-card {
+  height: 425px;
+}
+
 /* Sticky footer styles/
 //*********************/
 html {
