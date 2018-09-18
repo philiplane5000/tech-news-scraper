@@ -9,10 +9,28 @@
   width: 18rem;
 }
 
-.save-btn {
+.article-btn {
   width: 125px;
   margin-bottom: 20px;
   margin-left: 20px;
+}
+
+.library-btns-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.comment-btn {
+  flex: 1.5;
+  border: 2px solid rgba(0, 0, 0, 0.215);
+  margin-top: 10px; 
+  margin-right: 10px;
+}
+
+.delete-btn {
+  flex: .5;
+  margin-top: 10px;
 }
 
 /* Sticky footer styles/

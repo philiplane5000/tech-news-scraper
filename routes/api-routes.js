@@ -58,4 +58,11 @@ module.exports = function (app) {
             });
 
     })
+
+    app.delete("/article/delete/:id", function (req, res) {
+        console.log(req.params.id)
+        db.Article.findOneAndRemove({_id: req.params.id}).then(response => {
+            console.log(response)
+        })
+    })
 }
