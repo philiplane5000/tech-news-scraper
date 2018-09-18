@@ -6,4 +6,8 @@ module.exports = function (app) {
         res.sendFile(path.join(__dirname, "../public/index.html"));
     })
 
+    app.get("/mynews", function(req,res) {
+        res.sendFile(path.join(__dirname, "../public/saved.html"))
+    })
+
 }

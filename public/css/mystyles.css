@@ -6,6 +6,13 @@
 
 .article-card {
   height: 425px;
+  width: 18rem;
+}
+
+.save-btn {
+  width: 125px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
 
 /* Sticky footer styles/

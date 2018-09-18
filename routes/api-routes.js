@@ -16,6 +16,7 @@ module.exports = function (app) {
                 $("div .c-entry-box--compact--article").each((i, element) => {
 
                     let article = {};
+                    //WITTLE THIS DOWN WITH $(element).children().FIND(".className")//
                     article.imgHTML = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html()
                     article.title = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").text()
                     article.link = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").attr("href")
@@ -43,9 +44,9 @@ module.exports = function (app) {
 
     })
 
-    app.post("/article/test-save", function (req, res) {
+    app.post("/article/save", function (req, res) {
 
-        let article = req.body;
+        let article = req.body.newArticle;
         console.log(article)
 
         db.Article.create(article)

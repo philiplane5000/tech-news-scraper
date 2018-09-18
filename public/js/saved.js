@@ -1,35 +1,8 @@
-$(document).on("click", ".save-btn", function (event) {
-    event.preventDefault()
-    saveArticle($(this).parent())
+axios.get("/articles").then(response => {
+    renderLibrary(response.data)
 })
 
-$("#scrape-btn").on("click", function (event) {
-    event.preventDefault();
-    axios.get("/scrape")
-        .then(response => {
-            renderArticles(response.data)
-        })
-})
-
-function saveArticle(card) {
-
-    let newArticle = {}
-    newArticle.title = card.find(".article-title").text()
-    newArticle.link = card.find(".article-link").attr("href")
-    newArticle.author = card.find(".article-author").text()
-    newArticle.authorLink = card.find(".author-link").attr("href")
-
-    axios.post("/article/save", { newArticle })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(error => {
-            console.log(error)
-        })
-
-}
-
-function renderArticles(data) {
+function renderLibrary(data) {
 
     let $target = $("#articles-container");
     $target.empty()
@@ -46,6 +19,6 @@ function renderArticles(data) {
             <button type="button" class="btn btn-warning save-btn">Save</button>
             </div>
             `)
-        $target.append($card)
+        $target.prepend($card)
     })
 }
