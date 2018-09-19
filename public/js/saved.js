@@ -8,6 +8,20 @@ $(".clean-slate").on("click", function (event) {
     $("#articles-container").empty()
 })
 
+$(document).on("click", ".comment-btn", function (event) {
+    event.preventDefault();
+    let id = $(this).data("id");
+
+    axios.get(`/article/${id}`)
+        .then(function (response) {
+            renderFinalArticle(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+})
+
 $(document).on("click", ".delete-btn", function (event) {
     event.preventDefault()
     let id = $(this).data("id");
@@ -59,16 +73,18 @@ function renderLibrary(data) {
     })
 }
 
-$(document).on("click", ".comment-btn", function (event) {
-    event.preventDefault();
-    let id = $(this).data("id");
+function renderFinalArticle({_id, title, link, author, authorLink, comment}) {
+    // console.log(JSON.stringify(data,undefined,2));
+    console.log(_id)
+    console.log(title)
+    console.log(link)
+    console.log(author)
+    console.log(authorLink)
+    console.log(comment._id)
+    console.log(comment.body)
+    console.log(comment.user)
 
-    axios.get(`/article/${id}`)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    $("#articles-container").empty()
 
-})
+
+}
