@@ -4,9 +4,20 @@
     margin-bottom: 20px;
 }
 
-.article-card {
-  height: 425px;
-  width: 18rem;
+.article-outer-container {
+  display: flex;
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-radius: 5px;
+  padding: 30px;
+  margin: 20px 0;
+}
+
+.article-container {
+  flex: 9;
+}
+
+.library-btns-container {
+  flex: 1;
 }
 
 .article-btn {
@@ -17,20 +28,17 @@
 
 .library-btns-container {
   display: flex;
-  justify-content: center;
-  margin: 10px;
+  flex-direction: column;
 }
 
 .comment-btn {
-  flex: 1.5;
-  border: 2px solid rgba(0, 0, 0, 0.215);
-  margin-top: 10px; 
-  margin-right: 10px;
+  border: 1.25px solid rgba(0, 0, 0, 0.215);
+  margin: 10px; 
 }
 
 .delete-btn {
-  flex: .5;
-  margin-top: 10px;
+  margin: 10px;
+
 }
 
 /* Sticky footer styles/

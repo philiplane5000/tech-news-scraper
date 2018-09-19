@@ -59,10 +59,36 @@ module.exports = function (app) {
 
     })
 
+    //USING THIS ROUTE TO RETURN DATA FOR COMMENT PAGE WITH FULL ARTICLE INFO //
+
     app.delete("/article/delete/:id", function (req, res) {
-        console.log(req.params.id)
-        db.Article.findOneAndRemove({_id: req.params.id}).then(response => {
+        db.Article.findOneAndRemove({ _id: req.params.id }).then(response => {
             console.log(response)
         })
     })
-}
+
+    app.get("/article/:id", function (req, res) {
+        db.Article.findOne({ _id: req.params.id })
+            .populate("comment")
+            .then(response => {
+                res.json(response)
+            })
+    })
+
+    //TRIGGERED BY COMMENT BUTTON ON CLICK => RENDER A NEW PAGE WITH THE RESPONSE ARTICLE (INCLUDING COMMENTS)
+    app.post("/article/comment/:id", function (req, res) {
+
+        db.Comment.create(req.body)
+            .then(dbComment => {
+                return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+            })
+            .then(dbArticle => {
+                res.json(dbArticle);
+            })
+            .catch(err => {
+                res.json(err);
+            });
+
+    })
+
+};

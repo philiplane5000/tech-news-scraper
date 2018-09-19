@@ -3,12 +3,18 @@ axios.get("/articles").then(response => {
     renderLibrary(response.data)
 })
 
+$(".clean-slate").on("click", function (event) {
+    event.preventDefault()
+    $("#articles-container").empty()
+})
+
 $(document).on("click", ".delete-btn", function (event) {
     event.preventDefault()
     let id = $(this).data("id");
-    let selectedArticle = $(this)
-    console.log(selectedArticle)
-    deleteArticle(id)
+    let $selectedArticle = $(this).parent().parent().parent().parent();
+    $selectedArticle.remove()
+    // console.log(JSON.stringify($selectedArticle,undefined, 2))
+    // deleteArticle(id)
 })
 
 function deleteArticle(id) {
@@ -26,21 +32,43 @@ function renderLibrary(data) {
     let $target = $("#articles-container");
     $target.empty()
 
-    data.forEach(article => {
-        let $card = $(`<div class="card mr-4 mb-4" style="width: 18rem;">`)
-            .html(`
-            <div class="card article-card">
-            <img class="card-img-top" src="http://place-hold.it/180x100/666?fontsize=8" alt="Card image cap">
-            <div class="card-body">
-                    <a href="${article.link}" target="_blank" class="card-link article-link"><h5 class="card-title article-title">${article.title}</h5></a>
-                    <a href="${article.authorLink}" target="_blank" class="card-link author-link"><h6 class="card-subtitle mb-2 text-muted article-author">${article.author}</h6></a>
+    data.forEach(({ link, title, author, authorLink, _id }) => {
+        let $article = $(`
+            <div class="row justify-content-center article-row">
+
+                <div class="col-10">
+
+                    <div class="article-outer-container" style="border: 2px solid gray;">
+
+                        <div class="article-container">
+                            <a href="${link}" target="_blank"><h4>${title}</h4></a>
+                            <h5>Author: </h5><a href="${authorLink}"><h5>${author}</h5></a>
+                        </div>
+
+                        <div class="library-btns-container">
+                            <button type="button" class="btn btn-light comment-btn" data-id="${_id}">Comment</button>
+                            <button type="button" class="btn btn-danger delete-btn" data-id="${_id}">Remove From Library</button>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="library-btns-container">
-                    <button type="button" class="btn btn-light comment-btn">Comment</button>
-                    <button type="button" class="btn btn-danger delete-btn" data-id="${article._id}"><i class="far fa-trash-alt"></i></button>
-                </div>
+
             </div>
             `)
-        $target.prepend($card)
+        $target.prepend($article)
     })
 }
+
+$(document).on("click", ".comment-btn", function (event) {
+    event.preventDefault();
+    let id = $(this).data("id");
+
+    axios.get(`/article/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+})
