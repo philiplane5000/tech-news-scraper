@@ -6,6 +6,8 @@ axios.get("/articles").then(response => {
 $(document).on("click", ".delete-btn", function (event) {
     event.preventDefault()
     let id = $(this).data("id");
+    let selectedArticle = $(this)
+    console.log(selectedArticle)
     deleteArticle(id)
 })
 
