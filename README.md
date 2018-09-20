@@ -6,6 +6,10 @@
 
 * Final Article page without image and the div is not responsive
 
+* My library page not responsive due to button widths
+
+* Create function for renderComments()
+
 * `Clean Slate` button needs to remove saved articles from DB after confirming with user, "Clear All Articles from Library?"
 
 * Create `ORM.js` file to act as go-between for routes and MongoDB
