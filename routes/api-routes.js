@@ -14,10 +14,9 @@ module.exports = function (app) {
                 let newArticles = []
 
                 $("div .c-entry-box--compact--article").each((i, element) => {
-
                     let article = {};
-                    //WITTLE THIS DOWN WITH $(element).children().FIND(".className")//
-                    article.imgHTML = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html()
+                    //WITTLE THIS DOWN WITH $(element).children().FIND(".className")//                    
+                    article.imgSrc = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html().split('"')[3]
                     article.title = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").text()
                     article.link = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").attr("href")
                     article.author = $(element).children(".c-entry-box--compact__body").children(".c-byline").children(".c-byline__item").children("a").text()
@@ -59,14 +58,14 @@ module.exports = function (app) {
 
     })
 
-    //USING THIS ROUTE TO RETURN DATA FOR COMMENT PAGE WITH FULL ARTICLE INFO //
-
+    
     app.delete("/article/delete/:id", function (req, res) {
         db.Article.findOneAndRemove({ _id: req.params.id }).then(response => {
             console.log(response)
         })
     })
-
+    
+    //USING THIS ROUTE TO RETURN DATA FOR COMMENT PAGE WITH FULL ARTICLE INFO //
     app.get("/article/:id", function (req, res) {
         db.Article.findOne({ _id: req.params.id })
             .populate("comment")

@@ -1,7 +1,29 @@
-#save {
-    width: 125px;
-    margin-left: 20px;
-    margin-bottom: 20px;
+.article-card-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px;
+}
+  
+.card-img-top {
+  height: 180px;
+}
+  
+.card-article-title {
+  max-height: 90px;
+  overflow: hidden;
+}
+  
+.save-btn {
+  width: 125px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  background-color: rgba(125, 12, 125, 0.75);
+  border: purple;
+}
+
+.save-btn:hover, .save-btn:focus {
+  background-color: rgba(65, 0, 65, 0.746)
 }
 
 .article-outer-container {
@@ -20,12 +42,6 @@
   flex: 1;
 }
 
-.article-btn {
-  width: 125px;
-  margin-bottom: 20px;
-  margin-left: 20px;
-}
-
 .library-btns-container {
   display: flex;
   flex-direction: column;
@@ -38,7 +54,16 @@
 
 .delete-btn {
   margin: 10px;
+}
 
+/*FINAL ARTICLE STYLES*/
+#article-box {
+  margin: 20px 0 40px 0;
+}
+
+.final-img-container {
+  display: flex;
+  justify-content: center;
 }
 
 /* Sticky footer styles/
