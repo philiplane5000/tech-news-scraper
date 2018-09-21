@@ -87,21 +87,24 @@ function renderFinalArticle(data) {
     let $target = $("#articles-container");
     $target.empty();
 
+    //ITS OWN FUNCTION//
     $target.append(`
         <div class="row">
 
-            <div class="col-lg-5 col-md-5 col-sm-12 final-img-outer-container">
-                <div class="final-img-inner-container" style="background-image: url('${data.imgSrc}');">
-                </div>
+            <div class="col-xl-6 col-lg-5 col-sm-12 final-img-outer-container">
+                <a href="${data.link}" target="_blank">
+                    <div class="final-img-inner-container" style="background-image: url('${data.imgSrc}');">
+                    </div>
+                </a>
             </div>
 
-            <div class="col-lg-7 col-md-7 col-sm-12">
+            <div class="col-xl-6 col-lg-7 col-sm-12">
                 <div id="article-box">
-                    <a href="${data.link}" target="_blank"><h2>${data.title}</h2></a>
-                    <a href="${data.authorLink}" target="_blank"><h4>${data.author}</h4></a>
+                    <a href="${data.link}" target="_blank"><h4>${data.title}</h4></a>
+                    <a href="${data.authorLink}" target="_blank"><h5>${data.author}</h5></a>
                 </div>
                 <div id="comments-box">
-                    <!--ADD COMMENT TEXTAREA AND/IF COMMENTS --> TEXTAREA + COMMENTS LISTED-->
+                    <!--ADD COMMENT TEXTAREA AND IF THERE ARE COMMENTS: TEXTAREA + COMMENTS LISTED-->
                 </div>
             </div>
 
@@ -111,18 +114,28 @@ function renderFinalArticle(data) {
 
     let $commentsBox = $("#comments-box");
     if (data.comment === undefined) {
-        // console.log("NO COMMENT")
-        //RENDER A TEXTBOX -"ADD COMMENT" WITH TEXTAREA INPUT//
-        // ^ CAN USE SAME FUNCTION WITHIN renderComments() TO RENDER THE 
-        return
+        let $addComments = renderAddComment()
+        $commentsBox.empty()
+        $commentsBox.prepend($addComments)
     } else {
         let $comments = renderComments(data.comment)
+        let $addComment = renderAddComment() 
         $commentsBox.empty()
-        // ATTENTION(!)
-        // $commentsBox.prepend($addComment)
-        // ATTENTION(!)
         $commentsBox.append($comments)
+        $commentsBox.append($addComment)
     }
+}
+
+function renderAddComment() {
+    return (`
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Comment:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    `)
 }
 
 function renderComments({_id, body, user}) {
