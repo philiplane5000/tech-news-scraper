@@ -20,6 +20,9 @@ let ArticleSchema = new Schema({
     authorLink: {
         type: String,
     },
+    imgSrc: {
+        type: String,
+    },
     comment: {
         type: Schema.Types.ObjectId,
         ref: "Comment"

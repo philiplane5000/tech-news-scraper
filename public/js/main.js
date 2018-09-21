@@ -18,6 +18,7 @@ function saveArticle(card) {
     newArticle.link = card.find(".article-link").attr("href")
     newArticle.author = card.find(".article-author").text()
     newArticle.authorLink = card.find(".author-link").attr("href")
+    newArticle.imgSrc = card.find(".card-img-top").attr("src");
 
     axios.post("/article/save", { newArticle })
         .then(response => {

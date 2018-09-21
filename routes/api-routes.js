@@ -58,13 +58,6 @@ module.exports = function (app) {
 
     })
 
-    
-    app.delete("/article/delete/:id", function (req, res) {
-        db.Article.findOneAndRemove({ _id: req.params.id }).then(response => {
-            console.log(response)
-        })
-    })
-    
     //USING THIS ROUTE TO RETURN DATA FOR COMMENT PAGE WITH FULL ARTICLE INFO //
     app.get("/article/:id", function (req, res) {
         db.Article.findOne({ _id: req.params.id })
@@ -72,6 +65,12 @@ module.exports = function (app) {
             .then(response => {
                 res.json(response)
             })
+    })
+
+    app.delete("/article/delete/:id", function (req, res) {
+        db.Article.findOneAndRemove({ _id: req.params.id }).then(response => {
+            console.log(response)
+        })
     })
 
     //TRIGGERED BY COMMENT BUTTON ON CLICK => RENDER A NEW PAGE WITH THE RESPONSE ARTICLE (INCLUDING COMMENTS)

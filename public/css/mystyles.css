@@ -1,3 +1,21 @@
+/* Sticky footer styles/
+//*********************/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
 .article-card-flex {
   display: flex;
   flex-direction: column;
@@ -61,26 +79,46 @@
   margin: 20px 0 40px 0;
 }
 
-.final-img-container {
+.final-img-outer-container {
   display: flex;
   justify-content: center;
 }
 
-/* Sticky footer styles/
-//*********************/
-html {
-    position: relative;
-    min-height: 100%;
+
+.final-img-inner-container {
+  /* min-width: 600px;
+  min-height: 450px; */
+  background-image: url('http://place-hold.it/600x450/666');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+@media only screen and (min-width: 1600px) {
+  .final-img-inner-container {
+    width: 665px;
+    height: 500px;
   }
-  body {
-    margin-bottom: 60px; /* Margin bottom by footer height */
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1600px) {
+  .final-img-inner-container {
+    width: 500px;
+    height: 375px;
   }
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px; /* Set the fixed height of the footer here */
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #f5f5f5;
+}
+
+@media only screen and (max-width: 1200px) {
+  .final-img-inner-container {
+    width: 335px;
+    height: 250px;
   }
-  
+}
+
+/* @media only screen and (max-width: 768px) {
+  .final-img-inner-container {
+    width: 200px;
+    height: 150px;
+  }
+
+} */

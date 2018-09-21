@@ -4,9 +4,11 @@
 
 * Comment delete button should delete that comment (missing route)
 
-* Final Article page without image and the div is not responsive
+* Media queries for final article title and author link text to SHRINK it down for comments section
 
 * My library page not responsive due to button widths
+
+* Final Article page needs a back to My Library button
 
 * Create function for renderComments()
 
@@ -17,5 +19,6 @@
 * Create `utils.js` for routes to access additional functions e.g. scrape
 
 * Comments will add additional comments and not replace existing
+
 
 

@@ -90,17 +90,18 @@ function renderFinalArticle(data) {
     $target.append(`
         <div class="row">
 
-            <div class="col-5 final-img-container">
-                <img src="http://place-hold.it/650x450/666" class="img-fluid">
+            <div class="col-lg-5 col-md-5 col-sm-12 final-img-outer-container">
+                <div class="final-img-inner-container" style="background-image: url('${data.imgSrc}');">
+                </div>
             </div>
 
-            <div class="col-7">
+            <div class="col-lg-7 col-md-7 col-sm-12">
                 <div id="article-box">
-                    <a href="${data.link}"><h2>${data.title}</h2></a>
-                    <a href="${data.authorLink}"><h4>${data.author}</h4></a>
+                    <a href="${data.link}" target="_blank"><h2>${data.title}</h2></a>
+                    <a href="${data.authorLink}" target="_blank"><h4>${data.author}</h4></a>
                 </div>
                 <div id="comments-box">
-                    <h4>No Comments</h4>
+                    <!--ADD COMMENT TEXTAREA AND/IF COMMENTS --> TEXTAREA + COMMENTS LISTED-->
                 </div>
             </div>
 
@@ -109,33 +110,41 @@ function renderFinalArticle(data) {
     `);
 
     let $commentsBox = $("#comments-box");
-
     if (data.comment === undefined) {
-        console.log("NO COMMENT")
+        // console.log("NO COMMENT")
+        //RENDER A TEXTBOX -"ADD COMMENT" WITH TEXTAREA INPUT//
+        // ^ CAN USE SAME FUNCTION WITHIN renderComments() TO RENDER THE 
         return
     } else {
-        let $comments = (`
-        <h6>Comments:</h6>
-        <div class="cards-columns">
-
-            <div class="p-3 delete-comment-btn" data-id="${data.comment._id}" style="display: inline-block; color: white; background-color: crimson; border-radius: 5px;">
-                <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
-            </div>
-
-            <div class="card p-3 text-right">
-                <blockquote class="blockquote mb-0">
-                <p>"${data.comment.body}"</p>
-                <footer class="blockquote-footer">
-                    <small class="text-muted">
-                    <cite title="Source Title">${data.comment.user}</cite>
-                    </small>
-                </footer>
-                </blockquote>
-            </div>
-
-        </div>
-        `)
+        let $comments = renderComments(data.comment)
         $commentsBox.empty()
+        // ATTENTION(!)
+        // $commentsBox.prepend($addComment)
+        // ATTENTION(!)
         $commentsBox.append($comments)
     }
+}
+
+function renderComments({_id, body, user}) {
+    return (`
+    <h6>Comments:</h6>
+    <div class="cards-columns">
+
+        <div class="p-3 delete-comment-btn" data-id="${_id}" style="display: inline-block; color: white; background-color: crimson; border-radius: 5px;">
+            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+        </div>
+
+        <div class="card p-3 text-right">
+            <blockquote class="blockquote mb-0">
+            <p>"${body}"</p>
+            <footer class="blockquote-footer">
+                <small class="text-muted">
+                <cite title="Source Title">${user}</cite>
+                </small>
+            </footer>
+            </blockquote>
+        </div>
+
+    </div>
+    `)
 }
