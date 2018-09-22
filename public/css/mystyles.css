@@ -65,6 +65,16 @@ body {
   flex-direction: column;
 }
 
+.library-image-container {
+  width: 200px;
+  height: 170px;
+  background-image: url('http://place-hold.it/150x125/666');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  margin-right: 30px;
+}
+
 .comment-btn {
   border: 1.25px solid rgba(0, 0, 0, 0.215);
   margin: 10px; 
@@ -86,8 +96,6 @@ body {
 
 
 .final-img-inner-container {
-  /* min-width: 600px;
-  min-height: 450px; */
   background-image: url('http://place-hold.it/600x450/666');
   background-size: cover;
   background-repeat: no-repeat;
@@ -96,19 +104,19 @@ body {
 
 @media only screen and (min-width: 1600px) {
   .final-img-inner-container {
-    width: 665px;
-    height: 500px;
+    width: 750px;
+    height: 550px;
   }
 }
 
-@media only screen and (min-width: 1201px) and (max-width: 1600px) {
+@media only screen and (min-width: 768px) and (max-width: 1600px) {
   .final-img-inner-container {
-    width: 500px;
-    height: 375px;
+    width: 525px;
+    height: 400px;
   }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 768px) {
   .final-img-inner-container {
     width: 335px;
     height: 250px;

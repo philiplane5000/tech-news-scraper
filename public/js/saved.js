@@ -5,7 +5,22 @@ axios.get("/articles").then(response => {
 
 $(".clean-slate").on("click", event => {
     event.preventDefault()
+    
+    axios.delete("/articles/clear")
+        .then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
     $("#articles-container").empty()
+})
+
+$(document).on("click", ".delete-btn", function (event) {
+    event.preventDefault()
+    let id = $(this).data("id");
+    let $selectedArticle = $(this).parent().parent().parent().parent();
+    $selectedArticle.remove()
+    deleteArticle(id)
 })
 
 $(document).on("click", ".comment-btn", function (event) {
@@ -20,22 +35,44 @@ $(document).on("click", ".comment-btn", function (event) {
         .catch(error => {
             console.log(error);
         });
-
 })
 
-$(document).on("click", ".delete-btn", function (event) {
+$(document).on("click", ".delete-comment-btn", function (event) {
     event.preventDefault()
     let id = $(this).data("id");
-    let $selectedArticle = $(this).parent().parent().parent().parent();
-    $selectedArticle.remove()
-    deleteArticle(id)
+    let $comment = $(this).parent();
+    axios.delete(`/article/comment/${id}`)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    $comment.remove()
 })
 
-$(document).on("click", ".delete-comment-btn", function(event) {
+$(document).on("click", "#submit-comment", function (event) {
     event.preventDefault()
-    let id = $(this).data("id");
-    console.log(id)
-    //AJAX CALL TO DELETE COMMENT WITH THIS ID//
+    let $article_id = $(this).data("id");
+
+    axios.post(`/article/comment/${$article_id}`, {
+        user: $("#username").val().trim(),
+        body: $("#comment-text").val().trim()
+    }).then(response => {
+
+        axios.get(`/article/${$article_id}`)
+            .then(response => {
+                renderFinalArticle(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    }).catch(error => {
+        console.log(error)
+    })
+    $("#comment-text").val('');
+    $("#username").val('');
 })
 
 function deleteArticle(id) {
@@ -54,13 +91,17 @@ function renderLibrary(data) {
     let $regularContainer = $('<div class="container">')
     $target.empty()
 
-    data.forEach(({ link, title, author, authorLink, _id }) => {
+    data.forEach(({ link, title, author, authorLink, _id, imgSrc }) => {
         let $article = $(`
             <div class="row justify-content-center article-row">
 
                 <div class="col-12">
 
+
                     <div class="article-outer-container" style="border: 2px solid gray;">
+
+                        <div class="library-image-container" style="background-image: url('${imgSrc}')">
+                        </div>
 
                         <div class="article-container">
                             <a href="${link}" target="_blank"><h4>${title}</h4></a>
@@ -68,7 +109,7 @@ function renderLibrary(data) {
                         </div>
 
                         <div class="library-btns-container">
-                            <button type="button" class="btn btn-light comment-btn" data-id="${_id}">Comment</button>
+                            <button type="button" class="btn btn-light comment-btn" data-id="${_id}">Add Comment</button>
                             <button type="button" class="btn btn-danger delete-btn" data-id="${_id}">Remove From Library</button>
                         </div>
 
@@ -84,21 +125,21 @@ function renderLibrary(data) {
 
 function renderFinalArticle(data) {
 
+    console.log(JSON.stringify(data, undefined, 2));
+
     let $target = $("#articles-container");
     $target.empty();
 
     //ITS OWN FUNCTION//
     $target.append(`
         <div class="row">
-
-            <div class="col-xl-6 col-lg-5 col-sm-12 final-img-outer-container">
+            <div class="col-xl-6 col-lg-7 col-md-12 col-sm-12 final-img-outer-container">
                 <a href="${data.link}" target="_blank">
                     <div class="final-img-inner-container" style="background-image: url('${data.imgSrc}');">
                     </div>
                 </a>
             </div>
-
-            <div class="col-xl-6 col-lg-7 col-sm-12">
+            <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12">
                 <div id="article-box">
                     <a href="${data.link}" target="_blank"><h4>${data.title}</h4></a>
                     <a href="${data.authorLink}" target="_blank"><h5>${data.author}</h5></a>
@@ -107,44 +148,47 @@ function renderFinalArticle(data) {
                     <!--ADD COMMENT TEXTAREA AND IF THERE ARE COMMENTS: TEXTAREA + COMMENTS LISTED-->
                 </div>
             </div>
-
         </div>
-
     `);
 
     let $commentsBox = $("#comments-box");
-    if (data.comment === undefined) {
-        let $addComments = renderAddComment()
+    if (data.comment === undefined || data.comment === null) {
+        let $addComments = renderAddComment(data._id)
+        $(".clean-slate").hide()
         $commentsBox.empty()
         $commentsBox.prepend($addComments)
     } else {
         let $comments = renderComments(data.comment)
-        let $addComment = renderAddComment() 
+        let $addComment = renderAddComment(data._id)
+        $(".clean-slate").hide()
         $commentsBox.empty()
         $commentsBox.append($comments)
         $commentsBox.append($addComment)
     }
 }
 
-function renderAddComment() {
+function renderAddComment(_id) {
     return (`
     <form>
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">Comment:</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="form-group pt-3">
+            <label for="comment-text">Comment:</label>
+            <textarea class="form-control" id="comment-text" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group pt-1">
+            <input class="form-control form-control-sm" type="text" id="username" placeholder="username">
+        </div>
+
+        <button type="submit" class="btn btn-warning" id="submit-comment" data-id="${_id}">Submit</button>
     </form>
     `)
 }
 
-function renderComments({_id, body, user}) {
+function renderComments({ _id, body, user }) {
     return (`
-    <h6>Comments:</h6>
     <div class="cards-columns">
 
         <div class="p-3 delete-comment-btn" data-id="${_id}" style="display: inline-block; color: white; background-color: crimson; border-radius: 5px;">
-            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+            <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
         </div>
 
         <div class="card p-3 text-right">

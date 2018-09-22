@@ -58,6 +58,14 @@ module.exports = function (app) {
 
     })
 
+    app.delete("/articles/clear", function (req, res) {
+        db.Article.deleteMany().then(response => {
+            res.json(response)
+        }).catch(error => {
+            res.json(error)
+        })
+    })
+
     //USING THIS ROUTE TO RETURN DATA FOR COMMENT PAGE WITH FULL ARTICLE INFO //
     app.get("/article/:id", function (req, res) {
         db.Article.findOne({ _id: req.params.id })
@@ -86,6 +94,16 @@ module.exports = function (app) {
             .catch(err => {
                 res.json(err);
             });
+
+    })
+
+    app.delete("/article/comment/:id", function (req, res) {
+        db.Comment.deleteOne({ _id: req.params.id })
+            .then(dbComment => {
+                res.json(dbComment);
+            }).catch(err => {
+                res.json(err);
+            })
 
     })
 
