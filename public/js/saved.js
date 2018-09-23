@@ -5,7 +5,6 @@ axios.get("/articles").then(response => {
 
 $(".clean-slate").on("click", event => {
     event.preventDefault()
-    
     axios.delete("/articles/clear")
         .then(response => {
             console.log(response)
@@ -26,8 +25,6 @@ $(document).on("click", ".delete-btn", function (event) {
 $(document).on("click", ".comment-btn", function (event) {
     event.preventDefault();
     let id = $(this).data("id");
-    console.log(id);
-
     axios.get(`/article/${id}`)
         .then(response => {
             renderFinalArticle(response.data)
@@ -98,14 +95,14 @@ function renderLibrary(data) {
                 <div class="col-12">
 
 
-                    <div class="article-outer-container" style="border: 2px solid gray;">
+                    <div class="article-outer-container">
 
                         <div class="library-image-container" style="background-image: url('${imgSrc}')">
                         </div>
 
                         <div class="article-container">
-                            <a href="${link}" target="_blank"><h4>${title}</h4></a>
-                            <h5>Author: </h5><a href="${authorLink}"><h5>${author}</h5></a>
+                            <a href="${link}" target="_blank" class="library-article-link"><h4 class="library-article-title">${title}</h4></a>
+                            <h5 class="library-article-author">Author: </h5><a href="${authorLink}" target="_blank" class="library-article-link"><h5 class="library-article-author">${author}</h5></a>
                         </div>
 
                         <div class="library-btns-container">
@@ -130,7 +127,7 @@ function renderFinalArticle(data) {
     let $target = $("#articles-container");
     $target.empty();
 
-    //ITS OWN FUNCTION//
+    //LATER CONVER TO SEPARATE FUNCTION: renderArticle()//
     $target.append(`
         <div class="row">
             <div class="col-xl-6 col-lg-7 col-md-12 col-sm-12 final-img-outer-container">
@@ -140,9 +137,9 @@ function renderFinalArticle(data) {
                 </a>
             </div>
             <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12">
-                <div id="article-box">
-                    <a href="${data.link}" target="_blank"><h4>${data.title}</h4></a>
-                    <a href="${data.authorLink}" target="_blank"><h5>${data.author}</h5></a>
+                <div class="article-box">
+                    <a href="${data.link}" target="_blank" class="library-article-link"><h4>${data.title}</h4></a>
+                    <a href="${data.authorLink}" target="_blank" class="library-article-link"><h5>${data.author}</h5></a>
                 </div>
                 <div id="comments-box">
                     <!--ADD COMMENT TEXTAREA AND IF THERE ARE COMMENTS: TEXTAREA + COMMENTS LISTED-->
@@ -177,7 +174,6 @@ function renderAddComment(_id) {
         <div class="form-group pt-1">
             <input class="form-control form-control-sm" type="text" id="username" placeholder="username">
         </div>
-
         <button type="submit" class="btn btn-warning" id="submit-comment" data-id="${_id}">Submit</button>
     </form>
     `)
@@ -186,11 +182,9 @@ function renderAddComment(_id) {
 function renderComments({ _id, body, user }) {
     return (`
     <div class="cards-columns">
-
         <div class="p-3 delete-comment-btn" data-id="${_id}" style="display: inline-block; color: white; background-color: crimson; border-radius: 5px;">
             <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
         </div>
-
         <div class="card p-3 text-right">
             <blockquote class="blockquote mb-0">
             <p>"${body}"</p>
@@ -201,7 +195,6 @@ function renderComments({ _id, body, user }) {
             </footer>
             </blockquote>
         </div>
-
     </div>
     `)
 }
