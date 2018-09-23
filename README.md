@@ -1,24 +1,23 @@
-# NEWS SCRAPER
 
-### UNDER CONSTRUCTION
+# Tech-News Scraper
 
-* Comment delete button should delete that comment (missing route)
+### About
 
-* Media queries for final article title and author link text to SHRINK it down for comments section
+* `Tech-News-Scraper` is an app that allows users to scrape articles from popular tech sites or blogs and save favorites into a personalized `Library`.
 
-* My library page not responsive due to button widths
+* The `Scrape New Articles` button triggers the app to scrape the internet for new tech articles and renders them in a user-friendly view along with a `Save` button.
 
-* Final Article page needs a back to My Library button
+* `On-Click`, the `Save` button will save that particular article to the database.
+    * A future version of the app will provide users on login with personalized data i.e. their own personal `Library` of articles.
 
-* Create function for renderComments()
+* Click the `Saved Articles` tab to easily view or navigate between previously saved articles, leave personalized comments, or delete the article and all of its associated content (comments) from the database.
 
-* `Clean Slate` button needs to remove saved articles from DB after confirming with user, "Clear All Articles from Library?"
+* `Warning(!)`: The red `Clean Slate` button in the jumbotron directly below heading `My Library` will permanently erase all of the articles from `My Library` and re-render a blank page without them.
 
-* Create `ORM.js` file to act as go-between for routes and MongoDB
+### Summary
 
-* Create `utils.js` for routes to access additional functions e.g. scrape
+* `TNS` leverages `mongoose.js` to communicate with a `MongoDB` database. The on screen buttons trigger get or post requests via `express` routes to fetch or update appropriate article data -- the response is rendered in the view appropriately using `JavaScript` or `jQuery`.
 
-* Comments will add additional comments and not replace existing
-
+* `TNS` is available to preview live on [Heroku](https://ancient-harbor-58732.herokuapp.com/) 
 
 
