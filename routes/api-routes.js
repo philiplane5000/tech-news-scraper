@@ -15,8 +15,12 @@ module.exports = function (app) {
 
                 $("div .c-entry-box--compact--article").each((i, element) => {
                     let article = {};
-                    //WITTLE THIS DOWN WITH $(element).children().FIND(".className")//                    
-                    article.imgSrc = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html().split('"')[3]
+
+                    if (
+                        $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html() !== null
+                    ) {
+                        article.imgSrc = $(element).children("a").children(".c-entry-box--compact__image").children("noscript").html().split('"')[3]
+                    }
                     article.title = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").text()
                     article.link = $(element).children(".c-entry-box--compact__body").children(".c-entry-box--compact__title").children("a").attr("href")
                     article.author = $(element).children(".c-entry-box--compact__body").children(".c-byline").children(".c-byline__item").children("a").text()
